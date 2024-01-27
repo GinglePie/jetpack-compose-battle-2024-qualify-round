@@ -1,0 +1,4 @@
+<resources>
+    <string name="text_next" translatable="false">Next</string>
+    <string name="text_skip" translatable="false">Skip</string>
+</resources>
