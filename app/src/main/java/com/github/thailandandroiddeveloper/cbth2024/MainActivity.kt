@@ -3,6 +3,12 @@ package com.github.thailandandroiddeveloper.cbth2024
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -56,9 +62,23 @@ fun Main() {
                 NavigationButton("qualify3", navController)
             }
         }
-        composable("qualify1") { Qualify1Screen() }
-        composable("qualify2") { Qualify2Screen() }
-        composable("qualify3") { Qualify3Screen() }
+        val fadeIn = fadeIn(tween(500, easing = FastOutSlowInEasing))
+        val fadeOut = fadeOut(tween(200, easing = FastOutSlowInEasing))
+        val scaleIn = scaleIn(tween(500, easing = FastOutSlowInEasing), 0.5f)
+        val scaleOut = scaleOut(tween(200, easing = FastOutSlowInEasing))
+        composable("qualify1",
+            enterTransition = { fadeIn },
+            exitTransition = { fadeOut }
+        ) { Qualify1Screen(navController) }
+        composable("qualify2",
+            enterTransition = { fadeIn + scaleIn },
+            exitTransition = { fadeOut },
+            popExitTransition = { fadeOut + scaleOut }
+        ) { Qualify2Screen(navController) }
+        composable("qualify3",
+            enterTransition = { fadeIn + scaleIn },
+            exitTransition = { fadeOut + scaleOut }
+        ) { Qualify3Screen(navController) }
     }
 }
 
